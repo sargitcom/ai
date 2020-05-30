@@ -15,25 +15,25 @@ $nodes['A']->setMetadata('name', $a);
 $nodes['A']->setMetadata('cost', $costA);
 
 $b = 'B';
-$costA = 3;
+$costB = 3;
 $nodes['B'] = new Structures_Graph_Node();
 $nodes['B']->setMetadata('name', $b);
 $nodes['B']->setMetadata('cost', $costB);
 
 $c = 'C';
-$costA = 17;
+$costC = 17;
 $nodes['C'] = new Structures_Graph_Node();
 $nodes['C']->setMetadata('name', $c);
 $nodes['C']->setMetadata('cost', $costC);
 
 $d = 'D';
-$costA = 23;
+$costD = 23;
 $nodes['D'] = new Structures_Graph_Node();
 $nodes['D']->setMetadata('name', $d);
 $nodes['D']->setMetadata('cost', $costD);
 
 $e = 'E';
-$costA = 15;
+$costE = 15;
 $nodes['E'] = new Structures_Graph_Node();
 $nodes['E']->setMetadata('name', $e);
 $nodes['E']->setMetadata('cost', $costE);
@@ -59,6 +59,7 @@ if ($node === $endNode) {
     echo $node . "\n";
 }
 
+
 $frontier = new PriorityQueue();
 $frontier->push($node, $nodes[$node]->getMetadata('cost'));
 $explored = [];
@@ -70,6 +71,13 @@ while (true) {
     }
 
     $node = $frontier->pop();
+
+    if ($node === $endNode) {
+        echo "Sollution found\n";
+        echo $node . "\n";
+        return;
+    }
+
     $explored[] = $node;
 
     $nodeNeighbours = $nodes[$node]->getNeighbours();
@@ -79,13 +87,19 @@ while (true) {
         $child = $siblingNode->getMetadata('name');
 
         if (!in_array($child, $explored) && !in_array($child, $frontier->toArray())) {
-            if ($child === $endNode) {
+            $frontier->push($child, $nodes[$child]->getMetadata('cost'));
+        }/* else {
+            $frontier->getIterator()->rewind()
+
+            $frontier->getIterator()->valid()
+
+            {
                 echo "Sollution found\n";
                 echo $child . "\n";
                 return;
             }
-            $frontier->push($child, $nodes[$child]->getMetadata('cost'));
-        }
+
+        }*/
 
     }
 }
