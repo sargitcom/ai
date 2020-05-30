@@ -88,7 +88,7 @@ while (true) {
 
         if (!in_array($child, $explored) && !in_array($child, $frontier->toArray())) {
             $frontier->push($child, $nodes[$child]->getMetadata('cost'));
-        }/* else {
+        }/* else if child.STATE is in frontier with higher PATH-COST then replace that frontier node with child
             $frontier->getIterator()->rewind()
 
             $frontier->getIterator()->valid()
